@@ -1,4 +1,4 @@
-require_dependency 'application'
+#require_dependency 'application'
 
 class MultiSiteExtension < Radiant::Extension
   version "0.3"
@@ -23,10 +23,17 @@ class MultiSiteExtension < Radiant::Extension
     # with multiple alias_method_chain calls.
     require 'multi_site/route_extensions'
     require 'multi_site/route_set_extensions'
+
+
+  # Add site relation to snippet
+    Snippet.class_eval do
+      belongs_to :site
+    end
+
     Page.send :include, MultiSite::PageExtensions
     SiteController.send :include, MultiSite::SiteControllerExtensions
     Admin::PagesController.send :include, MultiSite::PagesControllerExtensions
-    ResponseCache.send :include, MultiSite::ResponseCacheExtensions
+#    ResponseCache.send :include, MultiSite::ResponseCacheExtensions
     Radiant::Config["dev.host"] = 'preview' if Radiant::Config.table_exists?
     admin.pages.index.add :top, "site_subnav"
     admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]
