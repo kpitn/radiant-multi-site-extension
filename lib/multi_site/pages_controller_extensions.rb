@@ -13,13 +13,23 @@ module MultiSite::PagesControllerExtensions
   end
 
   def index_with_root
-    if params[:root] # If a root page is specified
-      @homepage = Page.find(params[:root])
-      @site = @homepage.root.site
-    elsif @site = Site.first(:order => "position ASC") # If there is a site defined
-      if @site.homepage
-        @homepage = @site.homepage
-      end
+    #Find website path by domain
+    @site=Site.first(:conditions=>["base_domain=?",request.host])
+    if @site
+      @homepage = @site.homepage
+    else
+      #Find website path by root params
+       if params[:root]
+        @homepage = Page.find(params[:root])
+        @site = @homepage.root.site
+       end
+        if @site.nil?
+          #Find first website
+          @site = Site.first(:order => "position ASC") # If there is a site defined
+          if @site.homepage
+            @homepage = @site.homepage
+          end
+        end
     end
     @homepage ||= Page.find_by_parent_id(nil)
     response_for :plural
