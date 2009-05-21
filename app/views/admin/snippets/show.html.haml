@@ -1,0 +1,23 @@
+%h3 test
+- render_region :main do |main|
+  - main.show_header do
+    %h1 Edit Snippet
+  - main.show_form do
+    .form-area
+      - render_region :form do |form|
+        - form.show_title do
+          %p.title
+            %label{:for=>"snippet_name"} Name
+            = f.text_field :name, :class => 'textbox', :maxlength => 100
+        - form.show_content do
+          %p.content
+            %label{:for=>"snippet_content"} Body
+            ~ f.text_area :content, :class => "textarea", :style => "width: 100%"
+
+%p.content
+  %label{:for=>"snippet_content"} Name
+  =text_field_tag :name, @snippet.name, :class => 'textbox', :maxlength => 100
+
+%p.content
+  %label{:for=>"snippet_content"} Body
+  ~ text_area_tag 'content', @snippet.content, :class => "textarea", :style => "width: 100%"

@@ -13,6 +13,7 @@ module MultiSite::SnippetExtensions
   end
 
   def set_website
+    return if self.current_site.nil?
     self.site_id=self.current_site.id
   end
 
