@@ -26,20 +26,18 @@ class MultiSiteExtension < Radiant::Extension
     require 'multi_site/route_extensions'
     require 'multi_site/route_set_extensions'
 
-
-  # Add site relation to snippet
-    Snippet.class_eval do
-      belongs_to :site
-    end
-
     Page.send :include, MultiSite::PageExtensions
     SiteController.send :include, MultiSite::SiteControllerExtensions
+    ApplicationController.send :include,  MultiSite::ApplicationControllerExtensions
+    Admin::SnippetsController.send :include,  MultiSite::SnippetsControllerExtensions
+    Snippet.send :include,  MultiSite::SnippetExtensions
     Admin::PagesController.send :include, MultiSite::PagesControllerExtensions
     admin.pages.index.add :top, "site_subnav"
     admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]
   end
 
   def deactivate
+    admin.tabs.remove "Sites"
   end
 
 end
