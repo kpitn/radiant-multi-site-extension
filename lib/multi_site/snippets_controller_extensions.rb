@@ -11,7 +11,9 @@ module MultiSite::SnippetsControllerExtensions
   end
 
   def index
-    @snippets=Snippet.find_all_by_site_id(@current_site.id)
+    @my_snippets=Snippet.find_all_by_site_id(@current_site.id)
+    
+    @snippets=Snippet.find(:all,:conditions=>{:site_id=>nil})
   end
   
 end
