@@ -20,6 +20,7 @@ module MultiSite::SnippetsControllerExtensions
   end
 
   def show
+    @template_name = 'show'
     @snippet=Snippet.find(params[:id])
   end
 end
