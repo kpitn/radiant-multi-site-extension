@@ -32,9 +32,8 @@ class MultiSiteExtension < Radiant::Extension
     ApplicationController.send :include,  MultiSite::ApplicationControllerExtensions
     Admin::SnippetsController.send :include,  MultiSite::SnippetsControllerExtensions
     Snippet.send :include,  MultiSite::SnippetExtensions
-    
-    #Admin::PagesController.send :include, MultiSite::AdminPagesControllerExtensions
-    #PagesController.send :include, MultiSite::PagesControllerExtensions
+
+    Admin::PagesController.send :include, MultiSite::PagesControllerExtensions
     
     admin.pages.index.add :top, "site_subnav"
     admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]

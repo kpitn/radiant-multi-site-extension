@@ -10,9 +10,6 @@ module MultiSite::ApplicationControllerExtensions
      @current_site=Site.first(:conditions=>["base_domain=?",request.host])
 
 
-     logger.info 'informational message'
-
-
      return if @current_site.nil?
      
      Radiant::Config['admin.title'] = @current_site.name

@@ -5,16 +5,22 @@ module MultiSite::SnippetExtensions
       mattr_accessor :current_site
       belongs_to :site
       validates_uniqueness_of :name, :message => 'name already in use', :scope=> :site_id
+
+      def self.find_by_name(name)
+        snippet=Snippet.find(:first,:conditions=>{:name=>name,:site_id=>1})
+        if !snippet
+          snippet=Snippet.find(:first,:conditions=>{:name=>name})
+        end
+        return snippet
+      end
+
     end
     base.extend ClassMethods
   end
   
   module ClassMethods
 
-#    def find_by_name(name)
-#      Snippet.find(:first,:conditions=>{:name=>name,:site_id=>self.current_site})
-#    end
-    
+
   end
 
   def set_website
