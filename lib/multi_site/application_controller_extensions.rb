@@ -8,8 +8,6 @@ module MultiSite::ApplicationControllerExtensions
 
   def set_site
      @current_site=Site.first(:conditions=>["base_domain=?",request.host])
-
-
      return if @current_site.nil?
      
      Radiant::Config['admin.title'] = @current_site.name

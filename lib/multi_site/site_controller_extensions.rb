@@ -7,10 +7,16 @@ module MultiSite::SiteControllerExtensions
 
 protected
 
+#  def set_site
+#    Page.current_site=@current_site
+#    Snippet.current_site=@current_site
+#  end
+
   def set_site
-    Logger.new(STDOUT).info("TESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSST")
+    @current_site = Site.find_for_host(request.host)
     Page.current_site=@current_site
     Snippet.current_site=@current_site
+    true
   end
-
+  
 end
