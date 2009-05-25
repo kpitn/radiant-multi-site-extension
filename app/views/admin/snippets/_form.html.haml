@@ -3,6 +3,7 @@
   = render_region :form_top
   .form-area
     - render_region :form do |form|
+      = f.hidden_field :site_id
       - form.edit_title do
         %p.title
           %label{:for=>"snippet_name"} Name
@@ -23,7 +24,7 @@
   - render_region :form_bottom do |form_bottom|
     - form_bottom.edit_buttons do
       %p.buttons
-        - if admin? or @snippet.site_id==@current_site.id
+        - if admin?  or @snippet.site_id==@current_site.id
           = save_model_button(@snippet)
           = save_model_and_continue_editing_button(@snippet)
           or

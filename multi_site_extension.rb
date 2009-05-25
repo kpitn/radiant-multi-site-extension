@@ -1,4 +1,5 @@
 require_dependency 'application_controller'
+require_dependency "#{File.expand_path(File.dirname(__FILE__))}/lib/multi_site/pages_controller_extensions"
 
 class MultiSiteExtension < Radiant::Extension
   version "0.8.0"
@@ -25,13 +26,16 @@ class MultiSiteExtension < Radiant::Extension
     # with multiple alias_method_chain calls.
     require 'multi_site/route_extensions'
     require 'multi_site/route_set_extensions'
-
+    
     Page.send :include, MultiSite::PageExtensions
     SiteController.send :include, MultiSite::SiteControllerExtensions
     ApplicationController.send :include,  MultiSite::ApplicationControllerExtensions
     Admin::SnippetsController.send :include,  MultiSite::SnippetsControllerExtensions
     Snippet.send :include,  MultiSite::SnippetExtensions
-    Admin::PagesController.send :include, MultiSite::PagesControllerExtensions
+    
+    #Admin::PagesController.send :include, MultiSite::AdminPagesControllerExtensions
+    #PagesController.send :include, MultiSite::PagesControllerExtensions
+    
     admin.pages.index.add :top, "site_subnav"
     admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]
   end

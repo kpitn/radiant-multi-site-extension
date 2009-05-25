@@ -23,4 +23,9 @@ module MultiSite::SnippetsControllerExtensions
     @template_name = 'show'
     @snippet=Snippet.find(params[:id])
   end
+
+
+  def new
+    @snippet=Snippet.new({:site_id=>@current_site.id})
+  end
 end
